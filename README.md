@@ -1,166 +1,56 @@
-# Hallucination Mitigation in Vision-Language Models
+## Key Results (Comparison Across Methods)
 
-This repository contains my graduate research work on understanding and mitigating object hallucination in vision-language models (VLMs), using **LLaVA-1.5-7B** and the **POPE benchmark**.
-
-The focus of this work is not just applying mitigation methods, but studying how they behave, interact, and whether they can be combined effectively.
-
----
-
-## Problem Context
-
-Vision-language models often generate responses that are **linguistically plausible but not visually grounded**. 
-
-In object-centric settings, this typically appears as a false affirmative:
-
-> “Is there a bicycle in the image?” → *Yes* (when no bicycle exists)
-
-This type of hallucination is especially problematic because:
-- it appears confident
-- it is hard to detect downstream
-- it propagates into decision-making systems
-
----
-
-## Goal of This Work
-
-Instead of proposing a new model, this project focuses on:
-
-- building a **controlled evaluation pipeline**
-- understanding how hallucination emerges in binary queries
-- evaluating **training-free mitigation strategies**
-- analyzing trade-offs between precision, recall, and bias
-- studying whether mitigation methods are **composable**
-
----
-
-## Methods Explored
-
-All experiments are conducted using **LLaVA-1.5-7B** on the POPE benchmark under five conditions:
-
-### 1. Baseline
-Standard model inference without any mitigation.
-
-### 2. VCD-lite
-A simplified version of Visual Contrastive Decoding:
-- compares predictions on original vs blurred image
-- suppresses unstable affirmative responses
-
-### 3. OPERA-lite
-A constrained decoding setup inspired by OPERA:
-- deterministic decoding
-- prompt-level grounding constraints
-- reduced output drift
-
-### 4. Combined (VCD-lite + OPERA-lite)
-Direct composition of both mitigation strategies.
-
-### 5. Ensemble Methods
-Rule-based fusion across baseline, VCD-lite, and OPERA-lite outputs.
-
----
-
-## Benchmark: POPE
-
-The evaluation is performed on the **POPE benchmark**, which tests hallucination through binary yes/no object-existence queries.
-
-Three splits are used:
-
-- **Random** → general behavior  
-- **Popular** → tests bias toward frequent objects  
-- **Adversarial** → stresses co-occurrence priors (most challenging)
-
----
-
-## Key Results
+The following results highlight the behavior of each mitigation strategy on the POPE benchmark.
 
 ### Popular Split
-- Accuracy: 85.90%
-- Precision: 93.11%
-- Recall: 77.53%
-- F1 Score: 84.61%
-- Yes Ratio: 41.63%
+
+| Method        | Accuracy | Precision | Recall | F1 Score | Yes Ratio |
+|--------------|----------|----------|--------|----------|-----------|
+| Baseline     | 85.90%   | 93.11%   | 77.53% | 84.61%   | 41.63%    |
+| OPERA-lite   | 85.70%   | 93.57%   | 76.67% | 84.28%   | 40.97%    |
+| VCD-lite     | 79.60%   | 96.25%   | 61.60% | 75.12%   | 32.00%    |
+| Combined     | 79.13%   | 96.59%   | 60.40% | 74.32%   | 31.27%    |
+
+---
 
 ### Adversarial Split
-- Accuracy: 83.83%
-- Precision: 88.71%
-- Recall: 77.53%
-- F1 Score: 82.75%
-- Yes Ratio: 43.70%
+
+| Method        | Accuracy | Precision | Recall | F1 Score | Yes Ratio |
+|--------------|----------|----------|--------|----------|-----------|
+| Baseline     | 83.83%   | 88.71%   | 77.53% | 82.75%   | 43.70%    |
+| OPERA-lite   | 83.60%   | 89.01%   | 76.67% | 82.38%   | 43.07%    |
+| VCD-lite     | 78.30%   | 92.49%   | 61.60% | 73.95%   | 33.30%    |
+| Combined     | 77.80%   | 92.64%   | 60.40% | 73.12%   | 32.60%    |
 
 ---
 
-## Core Observation
+## What This Shows
 
-Across all experiments, a consistent pattern emerges:
+- **VCD-lite**
+  - Highest precision (strong hallucination suppression)
+  - Significant drop in recall (misses real objects)
+  - Much lower Yes Ratio → overly conservative
 
-> **Reducing hallucination tends to reduce recall.**
+- **OPERA-lite**
+  - Maintains a balanced trade-off
+  - Very close to baseline F1
+  - Slight reduction in hallucination without large recall loss
 
-Methods that suppress false positives (hallucinations) also suppress true positives.
-
-This leads to a **precision–recall trade-off**, rather than a clear improvement.
-
----
-
-## Main Finding
-
-The most important result from this work is:
-
-> **Training-free hallucination mitigation methods are not directly composable.**
-
-Specifically:
-
-- VCD-lite reduces hallucination but becomes overly conservative  
-- OPERA-lite maintains a better balance  
-- combining them **does not improve performance**
-- instead, it amplifies conservativeness
-
-This suggests that these methods:
-- do not address independent error sources
-- instead act on overlapping failure modes
+- **Combined (VCD + OPERA)**
+  - Does not improve performance
+  - Further reduces recall
+  - Becomes overly conservative
+  - Confirms that these methods are not directly composable
 
 ---
 
-## Interpretation
+## Key Insight
 
-Rather than being complementary, these mitigation methods tend to push the model in the same direction:
+> Applying multiple hallucination mitigation strategies together does not necessarily improve performance.
 
-> “Say *no* more often”
+Instead, these methods:
+- reinforce the same bias (predicting “no”)
+- reduce recall more than they improve precision
+- lead to **non-additive behavior**
 
-This explains why combining them fails to produce additive gains.
-
----
-
-## Next Direction
-
-Based on these findings, the next step is:
-
-### Adaptive Mitigation
-
-Instead of applying mitigation uniformly:
-
-- use model confidence (e.g., logit margin)
-- apply contrastive suppression only when needed
-- preserve recall for high-confidence predictions
-
-This shifts the problem from:
-> “Which method is best?”
-
-to:
-> “When should each method be applied?”
-
----
-
-## Repository Structure
-
-```text
-.
-├── scripts/              # inference and evaluation pipelines
-├── results/              # metrics and prediction outputs
-├── data/                 # lightweight setup files
-├── logs/                 # experiment logs
-├── LLaVA/                # supporting code
-├── OPERA/                # supporting code
-├── VCD/                  # supporting code
-├── setup_env.sh
-├── requirements.txt
-└── README.md
+This motivates moving toward **adaptive mitigation strategies** instead of static combinations.
