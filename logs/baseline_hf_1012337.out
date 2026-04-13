@@ -1,0 +1,19 @@
+Loading processor...
+Traceback (most recent call last):
+  File "/mmfs1/home/pbairedd/vlm_project/scripts/run_pope_hf.py", line 18, in <module>
+    processor = AutoProcessor.from_pretrained(MODEL_PATH)
+  File "/home/pbairedd/vlm_project/vlm_env/lib/python3.9/site-packages/transformers/models/auto/processing_auto.py", line 314, in from_pretrained
+    return processor_class.from_pretrained(
+  File "/home/pbairedd/vlm_project/vlm_env/lib/python3.9/site-packages/transformers/processing_utils.py", line 465, in from_pretrained
+    args = cls._get_arguments_from_pretrained(pretrained_model_name_or_path, **kwargs)
+  File "/home/pbairedd/vlm_project/vlm_env/lib/python3.9/site-packages/transformers/processing_utils.py", line 511, in _get_arguments_from_pretrained
+    args.append(attribute_class.from_pretrained(pretrained_model_name_or_path, **kwargs))
+  File "/home/pbairedd/vlm_project/vlm_env/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 2089, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/pbairedd/vlm_project/vlm_env/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 2311, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/pbairedd/vlm_project/vlm_env/lib/python3.9/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 124, in __init__
+    super().__init__(
+  File "/home/pbairedd/vlm_project/vlm_env/lib/python3.9/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+    fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+Exception: data did not match any variant of untagged enum ModelWrapper at line 277156 column 3

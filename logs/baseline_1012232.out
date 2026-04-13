@@ -1,0 +1,53 @@
+==== BASELINE EVALUATION ====
+Node: g211
+GPU: NVIDIA H200 NVL
+Python: Python 3.9.18
+Model: /mmfs1/home/pbairedd/vlm_project/models/llava-1.5-7b
+
+--- POPE-random ---
+Traceback (most recent call last):
+  File "/mmfs1/home/pbairedd/vlm_project/LLaVA/llava/eval/model_vqa_loader.py", line 6, in <module>
+    import shortuuid
+ModuleNotFoundError: No module named 'shortuuid'
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+  File "/cm/local/apps/python39/lib/python3.9/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "/cm/local/apps/python39/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/cm/local/apps/python39/lib/python3.9/json/decoder.py", line 340, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 2 column 1 (char 123)
+
+--- POPE-popular ---
+Traceback (most recent call last):
+  File "/mmfs1/home/pbairedd/vlm_project/LLaVA/llava/eval/model_vqa_loader.py", line 6, in <module>
+    import shortuuid
+ModuleNotFoundError: No module named 'shortuuid'
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+  File "/cm/local/apps/python39/lib/python3.9/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "/cm/local/apps/python39/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/cm/local/apps/python39/lib/python3.9/json/decoder.py", line 340, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 2 column 1 (char 123)
+
+--- POPE-adversarial ---
+Traceback (most recent call last):
+  File "/mmfs1/home/pbairedd/vlm_project/LLaVA/llava/eval/model_vqa_loader.py", line 6, in <module>
+    import shortuuid
+ModuleNotFoundError: No module named 'shortuuid'
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+  File "/cm/local/apps/python39/lib/python3.9/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "/cm/local/apps/python39/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/cm/local/apps/python39/lib/python3.9/json/decoder.py", line 340, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 2 column 1 (char 123)
+
+==== ALL SPLITS DONE ====
+total 0

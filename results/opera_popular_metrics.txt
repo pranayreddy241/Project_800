@@ -1,0 +1,6 @@
+Accuracy:  85.70%
+Precision: 93.57%
+Recall:    76.67%
+F1 Score:  84.28%
+Yes Ratio: 40.97%
+TP:1150 FP:79 TN:1421 FN:350 Total:3000

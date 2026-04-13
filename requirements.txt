@@ -1,0 +1,13 @@
+torch
+transformers
+accelerate
+tqdm
+numpy
+pandas
+pillow
+matplotlib
+scikit-learn
+opencv-python
+einops
+timm
+pycocotools

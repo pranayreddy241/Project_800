@@ -1,0 +1,6 @@
+Job started on node: g211
+GPU: NVIDIA H200 NVL
+Python: Python 3.9.18
+Downloading to /mmfs1/home/pbairedd/vlm_project/models/llava-1.5-7b...
+Fetching 17 files:   0%|          | 0/17 [00:00<?, ?it/s]Fetching 17 files:   6%|▌         | 1/17 [00:00<00:02,  6.68it/s]Fetching 17 files:  47%|████▋     | 8/17 [00:17<00:20,  2.30s/it]Fetching 17 files:  53%|█████▎    | 9/17 [00:19<00:17,  2.19s/it]Fetching 17 files: 100%|██████████| 17/17 [00:19<00:00,  1.14s/it]
+Download complete.
